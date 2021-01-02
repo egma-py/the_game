@@ -1,8 +1,10 @@
-from colors import *
-
-import pygame as pg
 import pygame.draw as pgd
 import math as m
+
+'''
+      !!!   TO DO   !!!
+ a polygon with rounded vertexes
+'''
 
 
 def arc(screen, color, Rect, start_angle, stop_angle, width=0):
@@ -173,7 +175,7 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
         with_widthnot0()
         
         
-def pie(screen, color, Rect, start_angle, stop_angle):
+def pie(screen, color, Rect, start_angle, stop_angle): #FIXME documentation
     if start_angle%360 == 0:
         start_angle -= 1
     if stop_angle%360 == 0:
