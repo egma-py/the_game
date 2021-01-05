@@ -62,4 +62,18 @@ class Polygon:
         self.vertexes = new_vertexes
         
     def move(self, velocity): #FIXME to do
+        new_vertexes = []
+        for vertex in self.vertexes:
+            new_vertex = [vertex[0]+velocity[0], vertex[1]+velocity[1]]
+            new_vertexes.append(new_vertex)
+        self.vertexes = new_vertexes
+    
+    def center(self): #FIXME to do
         pass
+    
+    def collide_point(self, point): #FIXME to do
+        pass
+    
+    def triangles(self):
+        triangles = []
+        return triangles

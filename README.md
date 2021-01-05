@@ -1,3 +1,4 @@
 # The game
 My game.
-  Current stage: making an idea
+  Genre: open world survival game
+  Current stage: making helper functions 
