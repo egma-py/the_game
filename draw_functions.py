@@ -7,7 +7,7 @@ import math as m
 '''
 
 
-def arc(screen, color, Rect, start_angle, stop_angle, width=0):
+def arc(screen, color, Rect, start_angle, stop_angle, width=0): #FIXME add rotation
     '''
     This function draws an arc better then pygame does.
 
@@ -51,7 +51,7 @@ def arc(screen, color, Rect, start_angle, stop_angle, width=0):
             start_angle_to_deg += 1
             
             
-def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME add transparence
+def roundrect(screen, color, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME add rotation
     '''
     This function draws a rectangle with rounded 
     corners, because pygame doesn't.
@@ -61,8 +61,7 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
     Parameters
     ----------
     screen : Surface
-    colors : list
-        Contains background and recctangle colors.
+    color : list
     Rect : tuple or list
     width : int, optional
         The default is 0.
@@ -82,10 +81,7 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
     h = Rect[1][1]
     if width%2 != 0:
         width += 1
-    if l > h:
-        maxR = h//2
-    else:
-        maxR = l//2
+    maxR = max(h//2, l//2)
     if radius > maxR:
         radius = maxR
     for i in range(4):
@@ -99,31 +95,32 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
                               (x+l-radius, y+h-radius),
                               (x+radius, y+h-radius)]
             pgd.rect(screen, 
-                     colors[0], 
+                     color, 
                      ((x, y+radius), (l, h-2*radius)), 
                      width)
             pgd.rect(screen, 
-                     colors[0],
+                     color,
                      ((x+radius, y), (l-2*radius, h)),
                      width)
             for center in circle_centers:
                 if radius != 0:
-                    pgd.circle(screen, colors[0], center, radius)
+                    pgd.circle(screen, color, center, radius)
         else:
             circle_centers = [(x+R[0], y+R[0]),
                               (x+l-R[1], y+R[1]),
                               (x+l-R[2], y+h-R[2]),
                               (x+R[3], y+h-R[3])]
-            pgd.rect(screen, colors[0], Rect, width)
-            pgd.rect(screen, colors[1], ((x, y), (R[0], R[0])), width)
-            pgd.rect(screen, colors[1], ((x+l-R[1], y), (R[1], R[1])), width)
-            pgd.rect(screen, colors[1], ((x+l-R[2], y+h-R[2]), (R[2], R[2])), width)
-            pgd.rect(screen, colors[1], ((x, y+h-R[3]), (R[3], R[3])), width)
+            pgd.polygon(screen, color, [
+                                            [x, y+R[0]], [x+R[0], y+R[0]], [x+R[0], y],
+                                            [x+l-R[1], y], [x+l-R[1], y+R[1]], [x+l, y+R[1]],
+                                            [x+l, y+h-R[2]], [x+l-R[2], y+h-R[2]], [x+l-R[2], y+h],
+                                            [x+R[3], y+h], [x+R[3], y+h-R[3]], [x, y+h-R[3]],
+                                           ])
             for i in range(4):
                 if R[i] <= 0:
                     pass
                 else:
-                    pgd.circle(screen, colors[0], circle_centers[i], R[i])
+                    pgd.circle(screen, color, circle_centers[i], R[i])
     def with_widthnot0():
         if R == [-1, -1, -1, -1]:
             starts = [(x+radius, y), 
@@ -143,10 +140,10 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
                       (-m.pi/2, 0),
                       (m.pi, 3*m.pi/2)]
             for i in range(4):
-                pgd.line(screen, colors[0], starts[i], ends[i], width)
+                pgd.line(screen, color, starts[i], ends[i], width)
                 start = angles[i][0]
                 stop = angles[i][1]
-                arc(screen, colors[0], circle_rects[i], start, stop, width)
+                arc(screen, color, circle_rects[i], start, stop, width)
         else:
             starts = [(x+R[0], y), 
                       (x+l, y+R[1]),
@@ -165,10 +162,10 @@ def roundrect(screen, colors, Rect, width=0, radius=0, R=[-1,-1,-1,-1]): #FIXME 
                       (-m.pi/2, 0),
                       (m.pi, 3*m.pi/2)]
             for i in range(4):
-                pgd.line(screen, colors[0], starts[i], ends[i], width)
+                pgd.line(screen, color, starts[i], ends[i], width)
                 start = angles[i][0]
                 stop = angles[i][1]
-                arc(screen, colors[0], circle_rects[i], start, stop, width)
+                arc(screen, color, circle_rects[i], start, stop, width)
     if width == 0:
         with_width0()
     else:

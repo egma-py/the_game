@@ -48,7 +48,7 @@ class Polygon:
         self.vertexes = vertexes
         self.width = width
     
-    def draw(self):
+    def draw(self): #FIXME add gradient
         pgd.polygon(self.screen, self.color, self.vertexes, self.width)
         
     def rotate(self, angle_deg, point, direction='clockwise'):
@@ -74,6 +74,6 @@ class Polygon:
     def collide_point(self, point): #FIXME to do
         pass
     
-    def triangles(self):
+    def triangles(self): #FIXME divide polygon into triangles
         triangles = []
         return triangles
